@@ -1,0 +1,9 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width"><body style="font:16px sans-serif;background:#111;color:#eee;padding:16px"><h3>Connection test</h3><pre id="o" style="white-space:pre-wrap;direction:ltr"></pre><script>
+const K="AIzaSyDfFoRfOF5ZuTEd2ojYopdwQQFIiB5r6ik",o=document.getElementById('o'),log=t=>o.textContent+=t+'\n';
+async function t(n,u,p){try{const r=await fetch(u,p),x=await r.text();log(n+': '+r.status+' '+x.replace(/\s+/g,' ').slice(0,200))}catch(e){log(n+': FAILED '+e.message)}}
+(async()=>{
+await t('1 auth','https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+K,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:'bad',password:'123456',returnSecureToken:true})});
+await t('2 firestore','https://firestore.googleapis.com/v1/projects/the-lion-wallet/databases/(default)/documents/db/ctl?key='+K);
+await t('3 sdk','https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',{method:'HEAD'});
+log('done');})()
+</script>
